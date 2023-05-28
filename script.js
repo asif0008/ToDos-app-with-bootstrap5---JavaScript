@@ -1,7 +1,7 @@
 const form = document.querySelector('#form');
 const itemList = document.querySelector('#items');
 const errorMsg = document.querySelector('#msg');
-const filter = document.querySelector('#filter');
+const filter = document.querySelector('#search-filter');
 
 // Form submit event
 form.addEventListener('submit', addItem);
@@ -17,7 +17,7 @@ function addItem(e) {
     // Get the value of Input
     var newItem = document.querySelector('#item');
 
-    if(newItem.value == '') {
+    if(newItem.value === '') {
         errorMsg.className = 'error-msg';
         errorMsg.innerHTML = 'Please add Todos to input field';
 
@@ -68,7 +68,14 @@ function filterItems(e) {
     // convert text to lowercase
     const text = e.target.value.toLowerCase();
     // Get list items from Unorder list
-    const items = document.getElementsByTagName('li');
-    // 
-    console.log(text);
+    const items = itemList.getElementsByTagName('li');
+    // Convert collection into Array
+    Array.from(items).forEach(function(item) {
+        const itemName = item.firstChild.textContent;
+        if(itemName.toLowerCase().indexOf(text) != -1 ){
+            item.style.display = 'block';
+        }else {
+            item.style.display = 'none';
+        }
+    })
 }
